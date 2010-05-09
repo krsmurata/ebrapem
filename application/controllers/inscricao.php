@@ -32,7 +32,8 @@ class Inscricao extends Controller {
         $data = array();
         
         $this->form_validation->set_rules('nome', 'Nome', 'required');
-        $this->form_validation->set_rules('cpf', 'CPF', 'required|is_numeric|exact_length[11]');
+        $this->form_validation->set_rules('cpf', 'CPF', 'required|is_numeric|exact_length[11]|matches[cpf_conf]');
+        $this->form_validation->set_rules('cpf_conf', 'Confirmar CPF', 'required');
         $this->form_validation->set_rules('nasc_dia', 'Data de Nascimento Dia', 'required|is_numeric|mac_length[2]');
         $this->form_validation->set_rules('nasc_mes', 'Data de Nascimento Mês', 'required|is_numeric|max_length[2]');
         $this->form_validation->set_rules('nasc_ano', 'Data de Nascimento Ano', 'required|is_numeric|exact_length[4]');
@@ -44,7 +45,7 @@ class Inscricao extends Controller {
         $this->form_validation->set_rules('tel_ddd', 'Telefone DDD', 'required|is_numeric|exact_length[2]');
         $this->form_validation->set_rules('tel_fone', 'Telefone Número', 'required|is_numeric|max_length[8]|min_length[6]');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|matches[email_conf]');
-        $this->form_validation->set_rules('email_conf', 'Email Confirmação', 'required');
+        $this->form_validation->set_rules('email_conf', 'Confirmar Email', 'required');
         $this->form_validation->set_rules('atividade', 'Atividade', 'required|integer');
         $this->form_validation->set_rules('enviar_trabalho', 'Enviar Trabalho', 'required|integer');
 

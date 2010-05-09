@@ -14,9 +14,9 @@ $(document).ready(function() {
         }
     });
 
-    <?php if (validation_errors() != '' || isset($error)) : ?>
+    if ($('#erros').html().replace(/\s/g,"") != "") {
         $("#erros").fadeIn('slow');
-    <?php endif; ?>
+    }
 });
 
 </script>
