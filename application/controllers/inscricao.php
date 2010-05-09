@@ -5,6 +5,7 @@ class Inscricao extends Controller {
     function Inscricao()
     {
         parent::Controller();
+        $this->load->model('Atividade_model');
     }
     
     function index()
@@ -19,7 +20,8 @@ class Inscricao extends Controller {
     function adicionar()
     {       
         $data['heading'] = 'Nova Inscrição';
-        
+        $data['atividades'] = $this->Atividade_model->get_records();
+
         $this->load->view('cabecalho', $data);
         $this->load->view('inscricao_adicionar', $data);
         $this->load->view('rodape', $data);
@@ -44,9 +46,9 @@ class Inscricao extends Controller {
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|matches[email_conf]');
         $this->form_validation->set_rules('email_conf', 'Email Confirmação', 'required');
         $this->form_validation->set_rules('atividade', 'Atividade', 'required|integer');
+        $this->form_validation->set_rules('enviar_trabalho', 'Enviar Trabalho', 'required|integer');
 
-        if ($this->input->post('enviar_trabalho')) {
-            
+        if ($this->input->post('enviar_trabalho') == 1) {
             $this->form_validation->set_rules('gt', 'Grupo de Trabalho', 'required');
             $this->form_validation->set_rules('trabalho_siucacao', 'Trabalho Situação', 'required');
             $this->form_validation->set_rules('trabalho_titulo', 'Trabalho Título', 'required');
@@ -109,7 +111,8 @@ class Inscricao extends Controller {
             'pais' => $this->input->post('pais'),
             'telefone' => "{$this->input->post('tel_ddd')}{$this->input->post('tel_fone')}",
             'email' => $this->input->post('email'),
-            'atividade_id' => $this->input->post('atividade')
+            'atividade_id' => $this->input->post('atividade'),
+            'trabalho_enviado' => $this->input->post('enviar_trabalho')
             )
         );
         

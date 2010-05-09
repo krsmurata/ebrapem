@@ -6,6 +6,10 @@ p { margin-bottom: 5px; }
 
 input { padding: 5px; }
 
+input.botao {
+  font-size: 30px;
+}
+
 #geral {
     margin:auto;
     width:910px;
@@ -18,8 +22,11 @@ input { padding: 5px; }
 }
 
 #erros {
+    display: none;
     padding: 10px;
     color: red;
     border: 1px solid #ccc;
     margin: 15px 5px;
 }
+
+
