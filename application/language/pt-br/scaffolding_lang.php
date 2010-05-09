@@ -8,9 +8,9 @@ $lang['scaff_edit']				= 'Editar';
 $lang['scaff_delete']			= 'Deletar';
 $lang['scaff_view_all']			= 'Ver tudo';
 $lang['scaff_yes']				= 'Sim';
-$lang['scaff_no']				= 'Não';
-$lang['scaff_no_data']			= 'Ainda não existem dados para essa tabela.';
-$lang['scaff_del_confirm']		= 'Você tem certeza que deseja deletar a seguinte linha:';
+$lang['scaff_no']				= 'NÃ£o';
+$lang['scaff_no_data']			= 'Ainda nÃ£o existem dados para essa tabela.';
+$lang['scaff_del_confirm']		= 'VocÃª tem certeza que deseja deletar a seguinte linha:';
 
 
 /* End of file scaffolding_lang.php */

@@ -1,0 +1,25 @@
+@import url('reset.css');
+
+body { font: 14px/21px Arial, Helvetica, sans-serif; }
+
+p { margin-bottom: 5px; }
+
+input { padding: 5px; }
+
+#geral {
+    margin:auto;
+    width:910px;
+}
+
+#cabecalho a {
+    display: block;
+    height: 250px;
+    background: url('../imagens/logo.jpg') no-repeat;
+}
+
+#erros {
+    padding: 10px;
+    color: red;
+    border: 1px solid #ccc;
+    margin: 15px 5px;
+}

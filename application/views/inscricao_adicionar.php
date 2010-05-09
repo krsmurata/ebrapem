@@ -7,7 +7,7 @@ jQuery(document).ready(function() {
 
 </script>
 
-<?php echo form_open_multipart('inscricao/adicionar'); ?>
+<?php echo form_open_multipart('inscricao/processa_adicionar'); ?>
 
 <p><b>*Nome:</b> <input type="text" name="nome" maxlength="255" size="70">
 <b>*CPF:</b> <input type="text" name="cpf" maxlength="11" size="12"> <font color="blue"><b>Apenas N&uacute;meros.</b></font></p> 

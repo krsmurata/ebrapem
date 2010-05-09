@@ -66,7 +66,7 @@ $config['url_suffix'] = "";
 | than english.
 |
 */
-$config['language']	= "";
+$config['language']	= "pt-br";
 
 /*
 |--------------------------------------------------------------------------
