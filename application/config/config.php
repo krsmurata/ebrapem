@@ -11,7 +11,7 @@
 |	http://example.com/
 |
 */
-$config['base_url']	= "http://ebrapem.mat.br.com/inscricoes/";
+$config['base_url']	= "http://localhost/ebrapem.mat.br/inscricoes/";
 
 /*
 |--------------------------------------------------------------------------
@@ -66,7 +66,7 @@ $config['url_suffix'] = "";
 | than english.
 |
 */
-$config['language']	= "pt-br";
+$config['language']	= "";
 
 /*
 |--------------------------------------------------------------------------
@@ -263,7 +263,7 @@ $config['cookie_path']		= "/";
 | COOKIE data is encountered
 |
 */
-$config['global_xss_filtering'] = FALSE;
+$config['global_xss_filtering'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
