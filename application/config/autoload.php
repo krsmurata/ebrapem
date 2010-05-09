@@ -108,7 +108,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('inscricao_model');
+$autoload['model'] = array('inscricao_model', 'atividade_model');
 
 
 
