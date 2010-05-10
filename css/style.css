@@ -64,10 +64,8 @@ p.by {
 #rodape {height:50px;}
 
 #erros {
-    display: none;
     padding: 10px;
     color: red;
-    border: 1px solid #ccc;
     margin: 15px 5px;
 }
 

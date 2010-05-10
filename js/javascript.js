@@ -13,8 +13,5 @@ $(document).ready(function() {
         }
     });
 
-    if ($('#erros').html().replace(/\s/g,"") != "") {
-        $("#erros").fadeIn('slow');
-    }
 });
 
