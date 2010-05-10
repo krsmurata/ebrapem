@@ -1,32 +1,9 @@
-<script language="javascript">
-$(document).ready(function() {
-    
-    if ($("input[name=enviar_trabalho]:radio:checked").val() == 1) {
-        $('#form_enviar_trabalho').show();
-    }
-
-    $('input[name=enviar_trabalho]:radio').change(function(){
-        if ($("input[name=enviar_trabalho]:radio:checked").val() == 1) {
-            $('#form_enviar_trabalho').slideDown('slow');
-        }
-        else {
-            $('#form_enviar_trabalho').hide();
-        }
-    });
-
-    if ($('#erros').html().replace(/\s/g,"") != "") {
-        $("#erros").fadeIn('slow');
-    }
-});
-
-</script>
-
 <?php echo form_open_multipart('inscricao/processa_adicionar'); ?>
-
+<p class='confirmada'>Valor: R$ <?php echo $valor; ?>,00 (Estudantes de Graduação: R$ <?php echo $valor/2; ?>,00)</p>
 <p><b>*Nome:</b> <input type="text" value="<?php echo set_value('nome'); ?>" name="nome" maxlength="255" size="70"></p>
 <p><b>*CPF:</b> <input type="text" value="<?php echo set_value('cpf'); ?>" name="cpf" maxlength="11" size="12"> <font color="blue"><b>Apenas N&uacute;meros.</b></font></p> 
 <p><b>* Confirmar CPF:</b> <input type="text" value="<?php echo set_value('cpf_conf'); ?>" name="cpf_conf" maxlength="11" size="12"><font color="blue"><b>Apenas N&uacute;meros.</b></font></p>
-<p class="destaque"><strong>Importante! O seu CPF será usado para confirmação de pagamento e consultas futuras.</strong></p>
+<p class="destaque">Importante! O seu CPF será usado para confirmação de pagamento e consultas futuras.</p>
 <p><b>*Data de Nascimento:</b> <input type "text" value="<?php echo set_value('nasc_dia'); ?>" name="nasc_dia" maxlength="2" size="2"> /
                       <input type="text" value="<?php echo set_value('nasc_mes'); ?>" name="nasc_mes" maxlength="2" size="2"> /
                       <input type="text" value="<?php echo set_value('nasc_ano'); ?>" name="nasc_ano" maxlength="4" size="4"></p> 
@@ -85,6 +62,9 @@ $(document).ready(function() {
 <hr>
 
 <h2>Trabalho</h2>
+    <p class='aguardando-conf'>
+        É possível enviar o trabalho até o dia 06/07/2010.
+    </p>
     <p>
         Enviar Trabalho?
         <input type="radio" name="enviar_trabalho" value="1" <?php echo set_radio('enviar_trabalho', '1'); ?>> Sim

@@ -6,6 +6,7 @@
 	<title>ENCONTRO BRASILEIRO DE ESTUDANTES DE PÓS-GRADUAÇÃO EM EDUCAÇÃO MATEMÁTICA</title>
 
     <script language="javascript" src="<?php echo base_url(); ?>js/jquery.js" ></script>
+    <script language="javascript" src="<?php echo base_url(); ?>js/javascript.js" ></script>
     <?php echo link_tag('css/style.css'); ?>
 </head>
 <body>
@@ -13,9 +14,15 @@
     <div id="cabecalho">
         <a href="http://ebrapem.mat.br">EBRAPEM</a>
     </div>
-    
+    <div id="menu">
+        <ul>
+            <li><?php echo anchor('inscricao/adicionar', 'faça sua inscrição'); ?></li>
+            <li><?php echo anchor('inscricao/confirmar_pagamento', 'confirmar pagamento'); ?></li>
+            <li><?php echo anchor('inscricao/status', 'verificar inscrição'); ?></li>
+        </ul>
+    </div>
     <div id="conteudo">
-        <h1><?php echo anchor(base_url(), 'Inscrições'); ?> >> <?php echo $heading ?></h1>
+        <h1><?php echo $heading ?></h1>
         <hr>
         
         <div id="erros">

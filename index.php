@@ -42,6 +42,9 @@
 */
 	$application_folder = "application";
 
+// Set default time zone
+date_default_timezone_set('America/Campo_Grande');
+
 /*
 |===============================================================
 | END OF USER CONFIGURABLE SETTINGS

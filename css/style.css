@@ -1,13 +1,52 @@
 @import url('reset.css');
 
-body { font: 14px/21px Arial, Helvetica, sans-serif; }
+body { font: 16px Arial, Helvetica, sans-serif; }
 
-p { margin-bottom: 5px; }
+p { 
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+fieldset {
+    padding:10px;
+    border: 1px solid #ccc;
+}
 
 input { padding: 5px; }
 
 input.botao {
   font-size: 30px;
+}
+
+h1 { 
+    font-size: 20px;
+    padding: 5px;
+}
+
+p.destaque, p.aguardando-comp {
+    padding: 5px;
+    text-align: center;
+    font-weight: bold;
+    background-color: #ffa1a1;
+}
+
+p.aguardando-conf {
+    background-color: #fff9b5;
+    padding: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+p.confirmada {
+    background-color: #c6ffbd;
+    padding: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+p.by {
+    font-size: 12px;
+    text-align: right;
 }
 
 #geral {
@@ -19,7 +58,10 @@ input.botao {
     display: block;
     height: 250px;
     background: url('../imagens/logo.jpg') no-repeat;
+    text-indent: -9000px;
 }
+
+#rodape {height:50px;}
 
 #erros {
     display: none;
@@ -29,4 +71,36 @@ input.botao {
     margin: 15px 5px;
 }
 
+#info-deposito {
+    width:300px;
+    border: 1px solid;
+    padding: 10px;
+}
 
+#menu {
+    height: 29px;
+}
+
+#menu li {
+  list-style-type: none;
+  float: left;
+}
+
+#menu li a {
+  display: block;
+  float: left;
+  height: 29px;
+  padding: 0 10px 0 15px;
+  line-height: 28px;
+  font-size: 13pt;
+  font-weight: bold;
+}
+
+#menu li a {
+  color: #f56f00;
+}
+
+#menu li a:hover {
+    color: #fff;
+    background-color: #f56f00
+}

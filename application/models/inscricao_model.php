@@ -23,7 +23,7 @@ class Inscricao_model extends Model {
 
     function update_record($data)
     {
-        $this->db->where('id', $data->id);
+        $this->db->where('cpf', $data['cpf']);
         $this->db->update('inscricoes', $data);
     }
 
@@ -41,6 +41,27 @@ class Inscricao_model extends Model {
         
         return $results[0];        
     }
+    
+    function valor()
+    {
+        $data_final1 = '2010-07-06';
+        $data_final2 = '2010-08-05';
+        $data_hoje = date("Y-m-d");
+        
+        $hoje = strtotime($data_hoje);
+        $final1 = strtotime($data_final1);
+        $final2 = strtotime($data_final2);
+
+        if ($hoje <= $final1) {
+            return 70;
+        }
+        elseif ($hoje > $final1 && $hoje <= $final2) {
+            return 80;
+        } else {
+            return 100;
+        }
+    }
+
 }
 
 ?>

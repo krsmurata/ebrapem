@@ -9,17 +9,18 @@ class Inscricao extends Controller {
     
     function index()
     {
-        $data['heading'] = 'Faça sua inscrição agora!';
+        $data['heading'] = 'Bem Vindo!';
 
         $this->load->view('cabecalho', $data);
         $this->load->view('inscricao_index', $data);
         $this->load->view('rodape', $data);
     }
 
-    function adicionar()
+    function adicionar($data = array())
     {       
-        $data['heading'] = 'Nova Inscrição';
+        $data['heading'] = "Nova Inscrição";
         $data['atividades'] = $this->atividade_model->get_records();
+        $data['valor'] = $this->inscricao_model->valor();
 
         $this->load->view('cabecalho', $data);
         $this->load->view('inscricao_adicionar', $data);
@@ -28,6 +29,10 @@ class Inscricao extends Controller {
 
     function processa_adicionar()
     {
+        if ($this->input->server('REQUEST_METHOD') == 'GET') {
+            redirect('inscricao/adicionar', 'refresh');
+        }
+
         $data = array();
         
         $this->form_validation->set_rules('nome', 'Nome', 'required');
@@ -50,9 +55,8 @@ class Inscricao extends Controller {
 
         if ($this->input->post('enviar_trabalho') == 1) {
             $this->form_validation->set_rules('gt', 'Grupo de Trabalho', 'required');
-            $this->form_validation->set_rules('trabalho_siucacao', 'Trabalho Situação', 'required');
+            $this->form_validation->set_rules('trabalho_situacao', 'Trabalho Situação', 'required');
             $this->form_validation->set_rules('trabalho_titulo', 'Trabalho Título', 'required');
-            $this->form_validation->set_rules('trabalho_arquivo', 'Trabalho Arquivo', 'required');
             
             if ($this->form_validation->run() == TRUE) {
                 $ultimo_nome = $this->inscricao_model->ultimo_nome($this->input->post('nome'));
@@ -97,8 +101,14 @@ class Inscricao extends Controller {
                     );
                 }
             }
-       }
-       
+        }
+         
+        $data['valor'] = $this->inscricao_model->valor();
+        
+        if ($this->input->post('atividade') == 1) {
+            $data['valor'] = $data['valor']/2;
+        }
+        
         $data = array_merge( $data,
             array(
             'nome' => $this->input->post('nome'),
@@ -112,30 +122,131 @@ class Inscricao extends Controller {
             'telefone' => "{$this->input->post('tel_ddd')}{$this->input->post('tel_fone')}",
             'email' => $this->input->post('email'),
             'atividade_id' => $this->input->post('atividade'),
-            'trabalho_enviado' => $this->input->post('enviar_trabalho')
+            'trabalho_enviado' => $this->input->post('enviar_trabalho'),
             )
         );
         
    	    if (isset($data['error']) || ($this->form_validation->run() == FALSE))
         {
-            $this->adicionar();
+            $this->adicionar($data);
         }
         else
         {
             $this->inscricao_model->add_record($data);
-            $this->sucesso();
+            $this->confirmar_pagamento($data['cpf']);
         }
     }
 
-    function sucesso()
+    function confirmar_pagamento($cpf = '', $data = array())
     {
+        $data['heading'] = "Confirmar Pagamento";
+        $data['cpf_invalido'] = false;
+        $data['tipo'] = 'confirmar_pagamento';
+        $data['cpf'] = $cpf;
 
-        $data['heading'] = 'Aguardando Envio do Comprovante de Pagamento';
+        if (empty($cpf) && $this->input->post('cpf')) {
+            redirect("inscricao/confirmar_pagamento/{$this->input->post('cpf')}", 'refresh');
+        }
+
+        if (!empty($cpf)) {
+            if ($this->check_cpf($cpf)) {
+                $data['cpf_invalido'] = true;
+            }
+            
+            $data['inscricao'] = $this->inscricao_model->find_by_cpf($cpf);
+            
+            $this->load->view('cabecalho', $data);
+            $this->load->view('inscricao_confirmar_pagamento', $data);
+            $this->load->view('rodape', $data);
+            
+        }
+        else
+        {
+            $this->load->view('cabecalho', $data);
+            $this->load->view('inscricao_confirmar_cpf', $data);
+            $this->load->view('rodape', $data);
+        }
+   }
+
+    function processa_confirmar_pagamento($cpf)
+    {
+        if ($this->input->server('REQUEST_METHOD') == 'GET') {
+            redirect('inscricao/confirmar_pagamento', 'refresh');
+        }
+
+        $data = array();
         
-        $this->load->view('cabecalho', $data);
-        $this->load->view('inscricao_sucesso', $data);
-        $this->load->view('rodape', $data);
+        $this->form_validation->set_rules('pag_num_doc', 'Número do Documento', 'required|is_numeric|matches[pag_num_doc_conf]');
+        $this->form_validation->set_rules('pag_num_doc_conf', 'Confirmar Número do Documento', 'required');
+        
+        if ($this->form_validation->run() == TRUE) {   
+            $config['upload_path'] = './comprovantes/';
+            $config['allowed_types'] = 'pdf|png|jpg|jpeg|gif';
+            $config['file_name'] = $cpf;
+
+            $this->load->library('upload', $config);
+
+            if ( ! $this->upload->do_upload('pag_arquivo'))
+            {
+                $data['error'] = $this->upload->display_errors();
+            }
+            else
+            {
+                $upload_data_comprovante = $this->upload->data();
+            }
+        }
+               
+   	    if (isset($data['error']) || ($this->form_validation->run() == FALSE))
+        {
+            $this->confirmar_pagamento($cpf, $data);
+        }
+        else
+        {
+            $data = array_merge( $data,
+                array(
+                'pag_num_doc' => $this->input->post('pag_num_doc'),
+                'pag_comprovante' => $this->input->post('pag_comprovante'),
+                'pag_arquivo' => $upload_data_comprovante['file_name'],
+                'cpf' => $cpf,
+                'pag_data_envio' => date("Y-m-d H:i:s", time())
+               )
+            );
+
+            $this->inscricao_model->update_record($data);
+            $this->status($cpf);
+        }
     }
+
+    function status($cpf='')
+    {
+        $data['heading'] = "Status da Inscrição";
+        $data['tipo'] = 'status';
+        $data['cpf_invalido'] = false;
+        $data['cpf'] = $cpf;
+
+        if (empty($cpf) && $this->input->post('cpf')) {
+            redirect("inscricao/status/{$this->input->post('cpf')}", 'refresh');
+        }
+
+        if (!empty($cpf)) {
+            if ($this->check_cpf($cpf)) {
+                $data['cpf_invalido'] = true;
+            }
+            
+            $data['inscricao'] = $this->inscricao_model->find_by_cpf($cpf);
+            
+            $this->load->view('cabecalho', $data);
+            $this->load->view('inscricao_status', $data);
+            $this->load->view('rodape', $data);
+            
+        }
+        else
+        {
+            $this->load->view('cabecalho', $data);
+            $this->load->view('inscricao_confirmar_cpf', $data);
+            $this->load->view('rodape', $data);
+        }
+   }
 	
     function valida_cpf($cpf)
 	{
