@@ -14,7 +14,7 @@
     }
     else {
         $link = anchor("inscricao/confirmar_pagamento/$cpf", 'aqui');
-        $status = "<p class='aguardando-comp'>Aguardando envio de comprovante. Envie seu comrpovante $link.</p>";
+        $status = "<p class='aguardando-comp'>Aguardando envio de comprovante. Envie seu comprovante $link.</p>";
     }
 ?>
 <?php echo $status; ?>
