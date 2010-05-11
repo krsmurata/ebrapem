@@ -62,6 +62,40 @@ class Inscricao_model extends Model {
         }
     }
 
+    function enviar_email($tipo, $data) {
+        
+        $this->email->from('xivebrapem.inscricoes@gmail.com', 'Inscrições - XIV EBRAPEM');
+        $this->email->to($data->email); 
+        
+        $texto = "Olá {$data->nome},\n\n";
+
+        switch ($tipo) {
+            case 'inscricao':
+                $assunto = 'Inscrição Efetuada - Aguardando Comprovante de Pagamento';
+                $texto .= "Sua inscrição foi efetuada e está aguardando o envio do Comprovante de Pagamento.\n\n";
+                $texto .= "Visite o endereço abaixo para consultar informações de pagamento e enviar o comprovante:\n\n";
+                $texto .= "http://ebrapem.mat.br/inscricoes/index.php/inscricao/confirmar_pagamento/{$data->cpf}\n\n";
+                break;
+            case 'comprovante':
+                $assunto = 'Comprovante Enviado - Aguardando Confirmação da Organização';
+                $texto .= "Obrigado por enviar o Comprovante de Pagamento.\n\n";
+                $texto .= "A organização irá confirmar o pagamento e será enviado um email avisando a aprovação.\n\n";
+                $texto .= "Caso não receba nenhum email nos próximos dias, você pode consultar no endereço abaixo o status da sua inscrição:\n\n";
+                $texto .= "http://ebrapem.mat.br/inscricoes/index.php/inscricao/status/{$data->cpf}\n\n";
+                break;
+        }
+        
+        $texto .= "Atenciasamente,\n\n"; 
+        $texto .= "Equipe de Inscrições XIV EBRAPEM\n";
+        $texto .= "http://ebrapem.com.br/inscricoes/\n";
+        $texto .= "xivebrapem.inscricoes@gmail.com\n";
+
+        $this->email->subject($assunto);
+        $this->email->message($texto);	
+        
+        $this->email->send();
+    }
+
 }
 
 ?>

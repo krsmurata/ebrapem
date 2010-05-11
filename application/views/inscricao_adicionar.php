@@ -44,8 +44,8 @@
 	</select> 
 </p> 
  
-<p><b>*CEP:</b> <input name="cep" size="9" type="text" value="<?php echo set_value('cep'); ?>" maxlength="8"> <font color="blue"><b>Apenas N&uacute;meros.</b></font>
-   <b>* Pa&iacute;s:</b> <input type="text" value="<?php echo set_value('pais', 'Brasil'); ?>" name="pais" maxlength="30" size="10"> </p> 
+<p><b>CEP:</b> <input name="cep" size="9" type="text" value="<?php echo set_value('cep'); ?>" maxlength="8"> <font color="blue"><b>Apenas N&uacute;meros.</b></font>
+   <b>*Pa&iacute;s:</b> <input type="text" value="<?php echo set_value('pais', 'Brasil'); ?>" name="pais" maxlength="30" size="10"> </p> 
  
 <p><b>*Telefone:</b> ( <input type="text" value="<?php echo set_value('tel_ddd'); ?>" name="tel_ddd" maxlength="2" size="2"> )
               <input type="text" value="<?php echo set_value('tel_fone'); ?>" name="tel_fone" maxlength="8" size="9"> </p> 
@@ -62,6 +62,11 @@
 <hr>
 
 <h2>Trabalho</h2>
+    <div id="enviar_trabalho_aviso" style="display:none;">
+        <p class='destaque'>
+            ATENÇÃO! Estudantes de Graduação não podem enviar trabalho.
+        </p>
+    </div>
     <p class='aguardando-conf'>
         É possível enviar o trabalho até o dia 06/07/2010.
     </p>

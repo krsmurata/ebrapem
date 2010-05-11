@@ -51,7 +51,7 @@
         
         <p><b>*Confirmar Número do Documento:</b> <input type="text" value="<?php echo set_value('pag_num_doc_conf'); ?>" name="pag_num_doc_conf" maxlength="20" size="20"></p>
     
-        <p><b>*Comprovante:</b> <input type="file" name="pag_arquivo" size="20" /> (PDF/JPEG/JPG/PNG/GIF)</p>
+        <p><b>*Comprovante:</b> <input type="file" name="pag_arquivo" size="20" /> (DOC/PDF/JPEG/JPG/PNG/GIF)</p>
      
         <p>
             <b>Outras Informações:</b>

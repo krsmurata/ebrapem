@@ -10,7 +10,7 @@ class Inscricao extends Controller {
     function index()
     {
         $data['heading'] = 'Bem Vindo!';
-
+        
         $this->load->view('cabecalho', $data);
         $this->load->view('inscricao_index', $data);
         $this->load->view('rodape', $data);
@@ -44,14 +44,14 @@ class Inscricao extends Controller {
         $this->form_validation->set_rules('endereco', 'Endereço', 'required');
         $this->form_validation->set_rules('cidade', 'Cidade', 'required');
         $this->form_validation->set_rules('estado', 'Estado', 'required');
-        $this->form_validation->set_rules('cep', 'CEP', 'required|is_numeric|exact_length[8]');
+        $this->form_validation->set_rules('cep', 'CEP', 'is_numeric|exact_length[8]');
         $this->form_validation->set_rules('pais', 'País', 'required');
         $this->form_validation->set_rules('tel_ddd', 'Telefone DDD', 'required|is_numeric|exact_length[2]');
         $this->form_validation->set_rules('tel_fone', 'Telefone Número', 'required|is_numeric|max_length[8]|min_length[6]');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|matches[email_conf]');
         $this->form_validation->set_rules('email_conf', 'Confirmar Email', 'required');
         $this->form_validation->set_rules('atividade', 'Atividade', 'required|integer');
-        $this->form_validation->set_rules('enviar_trabalho', 'Enviar Trabalho', 'required|integer');
+        #$this->form_validation->set_rules('enviar_trabalho', 'Enviar Trabalho', 'required|integer');
 
         if ($this->input->post('enviar_trabalho') == 1) {
             $this->form_validation->set_rules('gt', 'Grupo de Trabalho', 'required');
@@ -133,7 +133,16 @@ class Inscricao extends Controller {
         else
         {
             $this->inscricao_model->add_record($data);
-            $this->confirmar_pagamento($data['cpf']);
+            $inscricao = $this->inscricao_model->find_by_cpf($data['cpf']);
+            if (!empty($inscricao)) {
+                $this->inscricao_model->enviar_email('inscricao', $inscricao[0]);
+                $this->confirmar_pagamento($data['cpf']);
+            }
+            else
+            {
+                $data['error'] = 'ERRO!';
+                $this->adicionar($data);                
+            }
         }
     }
 
@@ -181,7 +190,7 @@ class Inscricao extends Controller {
         
         if ($this->form_validation->run() == TRUE) {   
             $config['upload_path'] = './comprovantes/';
-            $config['allowed_types'] = 'pdf|png|jpg|jpeg|gif';
+            $config['allowed_types'] = 'docx|doc|pdf|png|jpg|jpeg|gif';
             $config['file_name'] = $cpf;
 
             $this->load->library('upload', $config);
@@ -211,9 +220,20 @@ class Inscricao extends Controller {
                 'pag_data_envio' => date("Y-m-d H:i:s", time())
                )
             );
-
+            
             $this->inscricao_model->update_record($data);
-            $this->status($cpf);
+            
+            $inscricao = $this->inscricao_model->find_by_cpf($cpf);
+            if (!empty($inscricao)) {
+                $this->inscricao_model->enviar_email('comprovante', $inscricao[0]);            
+                $this->status($cpf);
+            }
+            else
+            {
+                $data['error'] = 'ERRO!';
+                $this->confirmar_pagamento($cpf, $data);                
+            }
+
         }
     }
 
