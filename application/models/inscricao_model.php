@@ -72,7 +72,7 @@ class Inscricao_model extends Model {
         switch ($tipo) {
             case 'inscricao':
                 $assunto = 'Solicitação de Inscrição - Aguardando Comprovante de Pagamento';
-                $texto .= "Sua inscrição foi efetuada e está aguardando o envio do Comprovante de Pagamento.\n\n";
+                $texto .= "Sua inscrição foi enviada e está aguardando o envio do Comprovante de Pagamento.\n\n";
                 $texto .= "Visite o endereço abaixo para consultar informações de pagamento e enviar o comprovante:\n\n";
                 $texto .= "http://ebrapem.mat.br/inscricoes/index.php/inscricao/confirmar_pagamento/{$data->cpf}\n\n";
                 break;
