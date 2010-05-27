@@ -86,7 +86,7 @@ class Inscricao_model extends Model {
             case 'trabalho':
                 $assunto = 'Trabalho Enviado';
                 $texto .= "Obrigado por enviar o seu trabalho \"$data->trabalho_titulo\".\n\n";
-                $texto .= "Se ainda não efetuou o pagamento ou envio o comprovante, visite o endereço abaixo:.\n\n";
+                $texto .= "Se ainda não efetuou o pagamento ou envio do comprovante, visite o endereço abaixo:\n\n";
                 $texto .= "http://ebrapem.mat.br/inscricoes/index.php/inscricao/confirmar_pagamento/{$data->cpf}\n\n";
                 $texto .= "Caso não receba nenhum email nos próximos dias, você pode consultar no endereço abaixo o status da sua inscrição:\n\n";
                 $texto .= "http://ebrapem.mat.br/inscricoes/index.php/inscricao/status/{$data->cpf}\n\n";
