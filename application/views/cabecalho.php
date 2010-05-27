@@ -18,6 +18,7 @@
         <ul>
             <li><?php echo anchor('inscricao/adicionar', 'faça sua inscrição'); ?></li>
             <li><?php echo anchor('inscricao/confirmar_pagamento', 'confirmar pagamento'); ?></li>
+            <li><?php echo anchor('inscricao/enviar_trabalho', 'enviar trabalho'); ?></li>
             <li><?php echo anchor('inscricao/status', 'verificar inscrição'); ?></li>
         </ul>
     </div>

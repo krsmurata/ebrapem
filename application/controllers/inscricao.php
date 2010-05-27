@@ -59,47 +59,7 @@ class Inscricao extends Controller {
             $this->form_validation->set_rules('trabalho_titulo', 'Trabalho Título', 'required');
             
             if ($this->form_validation->run() == TRUE) {
-                $ultimo_nome = $this->inscricao_model->ultimo_nome($this->input->post('nome'));
-           
-                $config['upload_path'] = './trabalhos/';
-                $config['allowed_types'] = 'pdf';
-   	            $config['file_name'] = "{$this->input->post('gt')}_{$ultimo_nome}_{$this->input->post('trabalho_situacao')}";
-   	    
-                $this->load->library('upload', $config);
-   
-   	            if ( ! $this->upload->do_upload('trabalho_arquivo'))
-   	            {
-   		            $data['error'] = $this->upload->display_errors();
-                }
-                else
-                {
-                    $upload_data_trabalho = $this->upload->data();
-                    
-                    if ( !empty($_FILES['trabalho_carta']['name'])) {
-                        $config['file_name'] = "{$config['file_name']}_carta";
-                         
-                        $this->upload->initialize($config);
-                       
-                        if ( ! $this->upload->do_upload('trabalho_carta'))
-                        {
-                            $data['error'] = $this->upload->display_errors();
-                        }
-                        else
-                        {
-                            $upload_data_carta = $this->upload->data();
-                            $data['trabalho_carta'] = $upload_data_carta['file_name'];
-                        }
-                    }
-                    
-                    $data = array_merge ( $data,
-                        array(
-                        'gt' => $this->input->post('gt'),
-                        'trabalho_situacao' => $this->input->post('trabalho_situacao'),
-                        'trabalho_titulo' => $this->input->post('trabalho_titulo'),
-                        'trabalho_arquivo' => $upload_data_trabalho['file_name']
-                        )
-                    );
-                }
+                $data = $this->salva_trabalho($data);
             }
         }
          
@@ -266,8 +226,124 @@ class Inscricao extends Controller {
             $this->load->view('inscricao_confirmar_cpf', $data);
             $this->load->view('rodape', $data);
         }
-   }
+    }
 	
+    function enviar_trabalho($cpf = '', $data = array())
+    {
+        $data['heading'] = "Enviar Trabalho";
+        $data['cpf_invalido'] = false;
+        $data['tipo'] = 'enviar_trabalho';
+        $data['cpf'] = $cpf;
+
+        if (empty($cpf) && $this->input->post('cpf')) {
+            redirect("inscricao/enviar_trabalho/{$this->input->post('cpf')}", 'refresh');
+        }
+
+        if (!empty($cpf)) {
+            if ($this->check_cpf($cpf)) {
+                $data['cpf_invalido'] = true;
+            }
+            
+            $data['inscricao'] = $this->inscricao_model->find_by_cpf($cpf);
+            
+            $this->load->view('cabecalho', $data);
+            $this->load->view('inscricao_enviar_trabalho', $data);
+            $this->load->view('rodape', $data);
+            
+        }
+        else
+        {
+            $this->load->view('cabecalho', $data);
+            $this->load->view('inscricao_confirmar_cpf', $data);
+            $this->load->view('rodape', $data);
+        }
+    }
+
+    function processa_enviar_trabalho($cpf)
+    {
+        if ($this->input->server('REQUEST_METHOD') == 'GET') {
+            redirect('inscricao/enviar_trabalho', 'refresh');
+        }
+        
+        $data = array('cpf' => $cpf, 'trabalho_enviado' => 1);
+
+        $this->form_validation->set_rules('gt', 'Grupo de Trabalho', 'required');
+        $this->form_validation->set_rules('trabalho_situacao', 'Trabalho Situação', 'required');
+        $this->form_validation->set_rules('trabalho_titulo', 'Trabalho Título', 'required');
+        
+        if ($this->form_validation->run() == TRUE) {
+            $data = $this->salva_trabalho($data);
+        }
+   	    
+        if (isset($data['error']) || ($this->form_validation->run() == FALSE))
+        {
+            $this->enviar_trabalho($cpf, $data);
+        }
+        else
+        {
+            $this->inscricao_model->update_record($data);
+            $inscricao = $this->inscricao_model->find_by_cpf($data['cpf']);
+            if (!empty($inscricao)) {
+                $this->inscricao_model->enviar_email('trabalho', $inscricao[0]);
+                $this->confirmar_pagamento($data['cpf']);
+            }
+            else
+            {
+                $data['error'] = 'ERRO!';
+                $this->enviar_trabalho($data);
+            }
+        }
+
+    }
+    
+    function salva_trabalho($data)
+    {
+        $nome = $this->input->post('nome');
+        $ultimo_nome = $this->inscricao_model->ultimo_nome($nome);
+
+        $config['upload_path'] = './trabalhos/';
+        $config['allowed_types'] = 'pdf';
+        $config['file_name'] = "{$this->input->post('gt')}_{$ultimo_nome}_{$this->input->post('trabalho_situacao')}";
+
+        $this->load->library('upload', $config);
+
+        if ( ! $this->upload->do_upload('trabalho_arquivo'))
+        {
+            $data['error'] = $this->upload->display_errors();
+        }
+        else
+        {
+            $upload_data_trabalho = $this->upload->data();
+            
+            if ( !empty($_FILES['trabalho_carta']['name'])) {
+                $config['file_name'] = "{$config['file_name']}_carta";
+                 
+                $this->upload->initialize($config);
+               
+                if ( ! $this->upload->do_upload('trabalho_carta'))
+                {
+                    $data['error'] = $this->upload->display_errors();
+                }
+                else
+                {
+                    $upload_data_carta = $this->upload->data();
+                    $data['trabalho_carta'] = $upload_data_carta['file_name'];
+                }
+            }
+            
+            $data = array_merge ( $data,
+                array(
+                'gt' => $this->input->post('gt'),
+                'trabalho_situacao' => $this->input->post('trabalho_situacao'),
+                'trabalho_titulo' => $this->input->post('trabalho_titulo'),
+                'trabalho_arquivo' => $upload_data_trabalho['file_name']
+                )
+            );
+        }
+
+        return $data;
+    }
+    
     function valida_cpf($cpf)
 	{
         $cpf = str_pad(preg_replace('[^0-9]', '', $cpf), 11, '0', STR_PAD_LEFT);
