@@ -1,10 +1,19 @@
-<?php if ($cpf_invalido == true) : ?>
+<?php
+    $insc = $inscricao[0];
+    
+    if ($cpf_invalido == true) :
+?>
 <p class='destaque'>
     Não consta inscrição nesse CPF. Tente outro CPF <?php echo anchor('inscricao/enviar_trabalho','aqui'); ?>.
 </p>
-<?php else :
-        $insc = $inscricao[0];
-        
+<?php 
+    elseif ($insc->atividade_id == 1) :
+?>
+<p class='destaque'>
+    ATENÇÃO! Estudantes de Graduação não podem enviar trabalho.
+</p>
+<?php
+    else :    
         if ($insc->trabalho_enviado == 1) :
             $link = anchor("inscricao/status/$cpf", 'aqui');
             echo "<p class='confirmada'>Seu trabalho já foi enviado! Mais informações $link.</p>";
