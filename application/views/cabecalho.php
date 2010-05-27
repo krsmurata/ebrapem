@@ -25,7 +25,11 @@
     <div id="conteudo">
         <h1><?php echo $heading ?></h1>
         <hr>
-        
+        <?php
+            if (isset($aviso)) {
+                echo "<p class='confirmada'>$aviso</p>";
+            }
+        ?>
         <div id="erros">
             <?php
                 if (isset($error)) {

@@ -285,7 +285,8 @@ class Inscricao extends Controller {
             $inscricao = $this->inscricao_model->find_by_cpf($data['cpf']);
             if (!empty($inscricao)) {
                 $this->inscricao_model->enviar_email('trabalho', $inscricao[0]);
-                $this->confirmar_pagamento($data['cpf']);
+                $data['aviso'] = 'Trabalho Enviado com Sucesso!';            
+                $this->confirmar_pagamento($cpf, $data);
             }
             else
             {

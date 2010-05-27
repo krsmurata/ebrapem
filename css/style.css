@@ -69,11 +69,7 @@ p.by {
 
 #rodape {height:50px;}
 
-#erros {
-    padding: 10px;
-    color: red;
-    margin: 15px 5px;
-}
+#erros {color: red;}
 
 #info-deposito {
     width:300px;
