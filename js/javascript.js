@@ -1,4 +1,9 @@
 $(document).ready(function() {
+
+    $('.confirmar').click(function(){
+        var answer = confirm('Confirmar Pagamento?');
+        return answer // answer is a boolean
+    });
     
     if ($("input[name=enviar_trabalho]:radio:checked").val() == 1) {
         $('#form_enviar_trabalho').show();

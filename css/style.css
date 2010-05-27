@@ -23,6 +23,12 @@ h1 {
     padding: 5px;
 }
 
+table, tr, td, th {
+    border:1px solid black;
+    padding: 3px;
+    text-align:center;
+}
+
 p.destaque, p.aguardando-comp {
     padding: 5px;
     text-align: center;

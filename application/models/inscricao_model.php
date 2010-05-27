@@ -62,33 +62,47 @@ class Inscricao_model extends Model {
         }
     }
 
+    function confirmar_inscricao($cpf) {
+        $data['pag_confirmado'] = 1;
+        $data['pag_data_conf'] = date("Y-m-d H:i:s", time());
+        $this->db->where('cpf', $cpf);
+        return $this->db->update('inscricoes', $data); 
+    }
+
     function enviar_email($tipo, $data) {
         
         $this->email->from('xivebrapem.inscricoes@gmail.com', 'Inscrições - XIV EBRAPEM');
         $this->email->to($data->email); 
-        
+        $this->email->cc('xivebrapem.inscricoes@gmail.com');
+
         $texto = "Olá {$data->nome},\n\n";
 
         switch ($tipo) {
             case 'inscricao':
-                $assunto = 'Solicitação de Inscrição - Aguardando Comprovante de Pagamento';
+                $assunto = "[EBRAPEM #{$data->id}] Solicitação de Inscrição - Aguardando Comprovante de Pagamento";
                 $texto .= "Sua inscrição foi enviada e está aguardando o envio do Comprovante de Pagamento.\n\n";
                 $texto .= "Visite o endereço abaixo para consultar informações de pagamento e enviar o comprovante:\n\n";
                 $texto .= "http://ebrapem.mat.br/inscricoes/index.php/inscricao/confirmar_pagamento/{$data->cpf}\n\n";
                 break;
             case 'comprovante':
-                $assunto = 'Comprovante Enviado - Aguardando Confirmação da Organização';
+                $assunto = "[EBRAPEM #{$data->id}] Comprovante Enviado - Aguardando Confirmação da Organização";
                 $texto .= "Obrigado por enviar o Comprovante de Pagamento.\n\n";
                 $texto .= "A organização irá confirmar o pagamento e será enviado um email avisando a aprovação.\n\n";
                 $texto .= "Caso não receba nenhum email nos próximos dias, você pode consultar no endereço abaixo o status da sua inscrição:\n\n";
                 $texto .= "http://ebrapem.mat.br/inscricoes/index.php/inscricao/status/{$data->cpf}\n\n";
                 break;
             case 'trabalho':
-                $assunto = 'Trabalho Enviado';
+                $assunto = "[EBRAPEM #{$data->id}] Trabalho Enviado";
                 $texto .= "Obrigado por enviar o seu trabalho \"$data->trabalho_titulo\".\n\n";
                 $texto .= "Se ainda não efetuou o pagamento ou envio do comprovante, visite o endereço abaixo:\n\n";
                 $texto .= "http://ebrapem.mat.br/inscricoes/index.php/inscricao/confirmar_pagamento/{$data->cpf}\n\n";
                 $texto .= "Caso não receba nenhum email nos próximos dias, você pode consultar no endereço abaixo o status da sua inscrição:\n\n";
+                $texto .= "http://ebrapem.mat.br/inscricoes/index.php/inscricao/status/{$data->cpf}\n\n";
+                break;
+            case 'confirmada':
+                $assunto = "[EBRAPEM #{$data->id}] Inscrição Confirmada!";
+                $texto .= "Muito obrigado por participar do XIV EBRAPEM, sua inscrição foi confirmada com sucesso.\n\n";
+                $texto .= "Você pode consultar no endereço abaixo mais detalhes da sua inscrição:\n\n";
                 $texto .= "http://ebrapem.mat.br/inscricoes/index.php/inscricao/status/{$data->cpf}\n\n";
                 break;
         }
