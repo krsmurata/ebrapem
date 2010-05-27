@@ -1,13 +1,13 @@
 <?php
 
-class Admin extends Controller {
+class Admin extends MY_Controller {
 
     function Admin()
-    {        
-        parent::Controller();
+    {
+        parent::MY_Controller();
     }
     
-    function inscricoes()
+    function index()
     {
         $this->load->view('admin_index', $data);
     }
