@@ -71,7 +71,7 @@
         É possível enviar o trabalho até o dia 06/07/2010.
     </p>
     <p>
-        Enviar Trabalho?
+        <strong>* Enviar Trabalho?</strong>
         <input type="radio" name="enviar_trabalho" value="1" <?php echo set_radio('enviar_trabalho', '1'); ?>> Sim
         <input type="radio" name="enviar_trabalho" value="0" <?php echo set_radio('enviar_trabalho', '0'); ?>> Não
     </p>

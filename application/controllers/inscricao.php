@@ -51,7 +51,7 @@ class Inscricao extends Controller {
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|matches[email_conf]');
         $this->form_validation->set_rules('email_conf', 'Confirmar Email', 'required');
         $this->form_validation->set_rules('atividade', 'Atividade', 'required|integer');
-        #$this->form_validation->set_rules('enviar_trabalho', 'Enviar Trabalho', 'required|integer');
+        $this->form_validation->set_rules('enviar_trabalho', 'Enviar Trabalho', 'required|integer');
 
         if ($this->input->post('enviar_trabalho') == 1) {
             $this->form_validation->set_rules('gt', 'Grupo de Trabalho', 'required');
