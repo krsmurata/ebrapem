@@ -18,8 +18,14 @@ class Sessions extends Controller
 
     function authenticate()
     {
-        if ($this->input->post('password') == 'culturaescolar!' && $this->input->post('login') == 'kakau')
+
+        $this->load->model('usuario_model');
+        $usuario = $this->usuario_model->find_by_login($this->input->post('login'));
+        if (!empty($usuario) && sha1($this->input->post('password')) == $usuario[0]->senha)
         {
+            $data['id'] = $usuario[0]->id;
+            $data['ultimo_login'] = date("Y-m-d H:i:s", time());
+            $this->usuario_model->update_record($data);
             $this->session->set_userdata('loggedin', true);
             redirect('/admin', 'refresh');
         }
