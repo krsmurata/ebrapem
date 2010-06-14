@@ -15,7 +15,16 @@ class Inscricao extends Controller {
         $this->load->view('inscricao_index', $data);
         $this->load->view('rodape', $data);
     }
-
+    
+    function informacoes_pagamento()
+    {
+        $data['heading'] = 'Informações para Pagamento';
+        
+        $this->load->view('cabecalho', $data);
+        $this->load->view('informacoes_pagamento', $data);
+        $this->load->view('rodape', $data);
+    }
+    
     function adicionar($data = array())
     {       
         $data['heading'] = "Nova Inscrição";
