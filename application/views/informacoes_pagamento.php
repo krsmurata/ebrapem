@@ -6,7 +6,7 @@
 </div>
 
 <p class='destaque'>
-    ATENÇÃO! Não serão aceitas tranferências ou depósitos agendados.<br />
+    ATENÇÃO! Não serão aceitas tranferências ou depósitos <u>agendados</u>.<br />
     Depósitos com envelope e DOC's podem demorar até 2 dias úteis para confirmação.
 </p>
 
