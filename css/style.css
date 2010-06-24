@@ -55,6 +55,8 @@ p.by {
     text-align: right;
 }
 
+.admin { font-size: 13px; }
+
 #geral {
     margin:auto;
     width:910px;
