@@ -21,10 +21,14 @@
     <?php echo $status; ?>
 </div>
 <div id="info">
+    <h2>Inscrição</h2>
+    <p><b>Data: </b>  <?php echo $insc->criado_em; ?></p>
+    <p><b>Valor: </b>  R$ <?php echo $insc->valor; ?></p>
+
     <p><b>Nome:</b> <?php echo $insc->nome; ?></p>
     <p><b>CPF:</b> <?php echo $insc->cpf; ?></p>
     <p><b>Data de Nascimento:</b> <?php echo $insc->data_nascimento; ?></p>
-     
+    
     <p><b>Endere&ccedil;o:</b>  <?php echo $insc->endereco; ?></p> 
      
     <p>
