@@ -68,7 +68,7 @@
         </p>
     </div>
     <p class='aguardando-conf'>
-        É possível enviar o trabalho até o dia 06/07/2010.
+        É possível enviar o trabalho até o dia 30/07/2010.
     </p>
     <p>
         <strong>* Enviar Trabalho?</strong>
