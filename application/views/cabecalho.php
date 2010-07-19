@@ -19,7 +19,7 @@
             <li><?php echo anchor('inscricao/adicionar', 'faça sua inscrição'); ?></li>
             <li><?php echo anchor('inscricao/informacoes_pagamento', 'informações pagamento'); ?></li>
             <li><?php echo anchor('inscricao/confirmar_pagamento', 'confirmar pagamento'); ?></li>
-            <li><?php echo anchor('inscricao/enviar_trabalho', 'enviar trabalho'); ?></li>
+            <li><?php echo anchor('inscricao/enviar_trabalho', '(re)enviar trabalho', array('class' => 'atencao')); ?></li>
             <li><?php echo anchor('inscricao/status', 'verificar inscrição'); ?></li>
         </ul>
     </div>

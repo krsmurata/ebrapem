@@ -94,8 +94,15 @@ p.by {
   height: 29px;
   padding: 0 10px 0 15px;
   line-height: 28px;
-  font-size: 13pt;
+  font-size: 12pt;
   font-weight: bold;
+}
+
+#menu li a.atencao { color:red; }
+
+#menu li a:hover.atencao {
+    color: #fff;
+    background-color: red;
 }
 
 #menu li a {

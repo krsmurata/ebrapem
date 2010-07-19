@@ -1,8 +1,3 @@
-<p class='destaque'>
-    ATENÇÃO! O trabalho poderá ser enviado apenas uma vez. <br />
-    Antes de enviar o trabalho, leia atentamente as normas <a href="http://ebrapem.mat.br/trabalhos.htm" target="_new">aqui</a>.
-</p>
-
 <p><b>*Grupo de Trabalho (GT)</b> <br />
 <input id="gt" type=radio name="gt" value="GT01">GT1-Formação de Professores de Matemática<br />
 <input id="gt" type=radio name="gt" value="GT02">GT2-Filosofia, Epistemologia e Educação Matemática<br />

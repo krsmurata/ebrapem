@@ -284,6 +284,7 @@ class Inscricao extends Controller {
         $this->form_validation->set_rules('trabalho_titulo', 'Trabalho Título', 'required');
         
         if ($this->form_validation->run() == TRUE) {
+            $this->exclui_trabalho($cpf);
             $data = $this->salva_trabalho($data);
         }
    	    
@@ -309,6 +310,34 @@ class Inscricao extends Controller {
 
     }
     
+    function exclui_trabalho($cpf)
+    {
+        $inscricao = $this->inscricao_model->find_by_cpf($cpf);
+        $inscricao = $inscricao[0];
+
+        if ($inscricao->trabalho_enviado == 1) {
+            
+            if (!empty($inscricao->trabalho_arquivo)) {
+                unlink("./trabalhos/{$inscricao->trabalho_arquivo}");
+            }
+            
+            if (!empty($inscricao->trabalho_carta)) {
+            unlink("./trabalhos/{$inscricao->trabalho_carta}");
+            }            
+            
+            $data = array(
+                'cpf' => $cpf,
+                'gt' => '',
+                'trabalho_situacao' => 0,
+                'trabalho_titulo' => '',
+                'trabalho_arquivo' => '',
+                'trabalho_carta' => ''
+            );
+            
+            $this->inscricao_model->update_record($data);
+        }
+    }
+
     function salva_trabalho($data)
     {
         $nome = $this->input->post('nome');

@@ -77,6 +77,11 @@
     </p>
 
     <div id="form_enviar_trabalho" style="display:none;">
+        <p class='destaque'>
+            ATENÇÃO! O trabalho poderá ser enviado apenas uma vez. <br />
+            Antes de enviar o trabalho, leia atentamente as normas <a href="http://ebrapem.mat.br/trabalhos.htm" target="_new">aqui</a>.
+        </p>
+
         <?php $this->load->view('form_enviar_trabalho'); ?>
     </div>
 <p style="color:red;"><b>* Campos obrigatórios.</b></p>
