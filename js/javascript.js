@@ -5,6 +5,11 @@ $(document).ready(function() {
         return answer // answer is a boolean
     });
     
+    $('.aprovar').click(function(){
+        var answer = confirm('Aprovar Trabalho?');
+        return answer // answer is a boolean
+    });
+    
     if ($("input[name=enviar_trabalho]:radio:checked").val() == 1) {
         $('#form_enviar_trabalho').show();
     }

@@ -31,6 +31,34 @@ class Admin extends MY_Controller {
         }
     }
 
+    function trabalhos($filtro = '', $val = '')
+    {
+        $condition = "trabalho_enviado = 1 AND pag_confirmado = 1";
+        
+        switch ($filtro) {
+            case 'carta':
+                if ($val == 'sim') {
+                    $condition .= " AND trabalho_carta != ''";
+                } elseif ($val == 'nao') {
+                    $condition .= " AND (trabalho_carta = '' OR trabalho_carta IS NULL)";
+                }
+                break;
+            case 'gt':
+                if ($val != 'todos') {
+                    $condition .= " AND gt = '$val'";
+                }
+                break;
+        }
+        
+        $data['filtro'] = $filtro;
+        $data['val'] = $val;
+        $data['query'] = $this->inscricao_model->get_records($condition);
+        $total = count($data['query']);
+        $trabalhos_aprovados = $this->trabalhos_aprovados($data['query']);
+        $data['heading'] = "Admin Trabalhos. TOTAL: $total - APROVADOS: $trabalhos_aprovados";
+        $this->load->view('admin_trabalhos', $data);
+    }
+
     private function confirmadas($inscricoes)
     {
         $x = 0;
@@ -41,4 +69,16 @@ class Admin extends MY_Controller {
         }
         return $x;
     }
+    
+    private function trabalhos_aprovados($inscricoes)
+    {
+        $x = 0;
+        foreach ($inscricoes as $i) {
+            if ($i->trabalho_aprovado == 1) {
+                $x++;
+            }
+        }
+        return $x;
+    }
+
 }

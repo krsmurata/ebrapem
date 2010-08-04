@@ -2,9 +2,17 @@
 
 class Inscricao_model extends Model {
 
-    function get_records()
+    function get_records($condition = '')
     {
-        $query = $this->db->get('inscricoes');
+        if (empty($condition)) {
+            $this->db->order_by('nome', 'asc');
+            $query = $this->db->get('inscricoes');
+        } else {
+            $this->db->group_by(array('nome', 'gt'));
+            $this->db->order_by('gt, nome', 'asc');
+            $query = $this->db->get_where('inscricoes', $condition);
+        }
+
         return $query->result();
     }
     

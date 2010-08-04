@@ -14,6 +14,7 @@
     <div id="menu">
         <ul>
             <li><?php echo anchor('admin', 'inscrições'); ?></li>
+            <li><?php echo anchor('admin/trabalhos', 'trabalhos'); ?></li>
             <li><?php echo anchor('sessions/logout', 'SAIR'); ?></li>
         </ul>
     </div>
