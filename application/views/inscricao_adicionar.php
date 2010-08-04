@@ -62,6 +62,16 @@
 <hr>
 
 <h2>Trabalho</h2>
+
+    <?php
+        if (time() > strtotime('2010-08-02')) :
+    ?>
+
+    <p class='destaque'>
+        ATENÇÃO! Envio de Trabalhos encerrado. Apenas inscrições para ouvintes serão aceitas.
+    </p>
+    <input type="hidden" name="enviar_trabalho" value="0">
+    <?php else : ?>
     <div id="enviar_trabalho_aviso" style="display:none;">
         <p class='destaque'>
             ATENÇÃO! Estudantes de Graduação não podem enviar trabalho.
@@ -84,6 +94,7 @@
 
         <?php $this->load->view('form_enviar_trabalho'); ?>
     </div>
+    <?php endif; ?>
 <p style="color:red;"><b>* Campos obrigatórios.</b></p>
 <p align="center"><input type="submit" value="Salvar" class="botao"></p>
 <?php echo form_close(); ?>

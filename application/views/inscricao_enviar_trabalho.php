@@ -1,4 +1,14 @@
 <?php
+    if (time() > strtotime('2010-08-02')) :
+?>
+
+<p class='destaque'>
+    ATENÇÃO! Envio de Trabalhos encerrado.
+</p>
+
+<?php
+ else:
+
     $insc = $inscricao[0];
     
     if ($cpf_invalido == true) :
@@ -29,4 +39,6 @@
         <p style="color:red;"><b>* Campos obrigatórios.</b></p>
         <p align="center"><input type="submit" value="Enviar" class="botao"></p>
     <?php echo form_close(); ?>
+<?php endif; ?>
+
 <?php endif; ?>
