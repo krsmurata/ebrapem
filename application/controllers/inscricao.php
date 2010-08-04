@@ -246,7 +246,10 @@ class Inscricao extends Controller {
         $data['cpf_invalido'] = false;
         $data['tipo'] = 'enviar_trabalho';
         $data['cpf'] = $cpf;
-
+        
+        $this->load->library('session');
+        $data['loggedin'] = $this->session->userdata('loggedin');
+        
         if (empty($cpf) && $this->input->post('cpf')) {
             redirect("inscricao/enviar_trabalho/{$this->input->post('cpf')}", 'refresh');
         }

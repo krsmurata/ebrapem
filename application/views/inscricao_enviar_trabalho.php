@@ -1,5 +1,5 @@
 <?php
-    if (time() > strtotime('2010-08-02')) :
+    if (time() > strtotime('2010-08-02') && !$loggedin):
 ?>
 
 <p class='destaque'>
