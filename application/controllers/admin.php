@@ -33,7 +33,7 @@ class Admin extends MY_Controller {
 
     function trabalhos($filtro = '', $val = '')
     {
-        $condition = "trabalho_enviado = 1 AND pag_confirmado = 1";
+        $condition = "trabalho_enviado = 1";
         
         switch ($filtro) {
             case 'carta':
@@ -57,6 +57,21 @@ class Admin extends MY_Controller {
         $trabalhos_aprovados = $this->trabalhos_aprovados($data['query']);
         $data['heading'] = "Admin Trabalhos. TOTAL: $total - APROVADOS: $trabalhos_aprovados";
         $this->load->view('admin_trabalhos', $data);
+    }
+    
+    function aprovar_trabalho($cpf)
+    {
+        if ($this->inscricao_model->aprovar_trabalho($cpf))
+        {
+            $inscricao = $this->inscricao_model->find_by_cpf($cpf);            
+            $this->inscricao_model->enviar_email('trabalho_aprovado', $inscricao[0]);
+            redirect('admin/trabalhos', 'refresh');
+        }
+        else
+        {
+            $data['error'] = 'ERRO!';
+            $this->index();
+        }
     }
 
     private function confirmadas($inscricoes)

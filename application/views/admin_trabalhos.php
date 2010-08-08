@@ -28,6 +28,7 @@
         <th>Trabalho Título</th>
         <th>Trabalho Arquivo</th>
         <th>Carta de Recomendação</th>
+        <th>Inscrição Confirmada?</th>
         <th>Aprovado?</th>
     </tr>
 <?php foreach($query as $row): ?>
@@ -37,6 +38,16 @@
         <td><?php echo $row->trabalho_titulo; ?></td>
         <td><a href='<?php echo base_url(); ?>trabalhos/<?php echo $row->trabalho_arquivo; ?>'><?php echo $row->trabalho_arquivo; ?></a></td>
         <td><a href='<?php echo base_url(); ?>trabalhos/<?php echo $row->trabalho_carta; ?>'><?php echo $row->trabalho_carta; ?></a></td>
+        <td> 
+            <?php if ($row->pag_confirmado == 1) : ?>
+            SIM!
+            <?php else :
+                //echo anchor("admin/confirmar_inscricao/{$row->cpf}", 'Confirmar', array('class' => 'confirmar'));
+            ?>
+            <b>NÃO</b>
+            <?php endif; ?>
+        </td>
+
         <td> 
             <?php if ($row->trabalho_aprovado == 1) : ?>
             SIM!

@@ -76,6 +76,13 @@ class Inscricao_model extends Model {
         $this->db->where('cpf', $cpf);
         return $this->db->update('inscricoes', $data); 
     }
+    
+    function aprovar_trabalho($cpf) {
+        $data['trabalho_aprovado'] = 1;
+        $data['trabalho_data_aprovacao'] = date("Y-m-d H:i:s", time());
+        $this->db->where('cpf', $cpf);
+        return $this->db->update('inscricoes', $data); 
+    }
 
     function enviar_email($tipo, $data) {
         
@@ -113,7 +120,15 @@ class Inscricao_model extends Model {
                 $texto .= "Você pode consultar no endereço abaixo mais detalhes da sua inscrição:\n\n";
                 $texto .= "http://ebrapem.mat.br/inscricoes/index.php/inscricao/status/{$data->cpf}\n\n";
                 break;
-        }
+            case 'trabalho_aprovado':
+                $assunto = "[EBRAPEM #{$data->id}] Trabalho Aprovado!";
+                $texto .= "Prezado participante, seu trabalho com o título \"{$data->trabalho_titulo}\" foi aceito no XIV EBRAPEM.\n\n";
+                $texto .= "No dia 09 de Agosto de 2010 será divulgada a lista de trabalhos aprovados oficialmente juntamente com os trabalhos completos.\n";
+                $texto .= "Assim você poderá fazer o download dos trabalhos relativos ao seu Grupo de Trabalho (GT) para discussão dos mesmos.\n\n";
+                $texto .= "Você pode consultar no endereço abaixo mais detalhes da sua inscrição:\n\n";
+                $texto .= "http://ebrapem.mat.br/inscricoes/index.php/inscricao/status/{$data->cpf}\n\n";
+                break;
+       }
         
         $texto .= "Atenciosamente,\n\n"; 
         $texto .= "Equipe de Inscrições XIV EBRAPEM\n";
