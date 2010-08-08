@@ -20,6 +20,13 @@ class Atividade_model extends Model {
         $this->db->update('atividades', $data);
     }
 
+    function find($id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->get('atividades');
+        return $query->result();
+    }
+    
     function delete_record()
     {
         $this->db->where('id', $this->uri->segment(3));

@@ -18,7 +18,13 @@
     }
 ?>
 <div id="status">
-    <?php echo $status; ?>
+    <?php
+        echo $status;
+        
+        if ($insc->trabalho_aprovado == 1) { 
+            echo "<p class='confirmada'>Parabéns! Seu trabalho já foi aprovado.</p>";
+        }
+    ?>
 </div>
 <div id="info">
     <h2>Inscrição</h2>
@@ -26,6 +32,7 @@
     <p><b>Valor: </b>  R$ <?php echo $insc->valor; ?></p>
 
     <p><b>Nome:</b> <?php echo $insc->nome; ?></p>
+    <p><b>Atividade:</b> <?php echo $atividade[0]->nome; ?></p>
     <p><b>CPF:</b> <?php echo $insc->cpf; ?></p>
     <p><b>Data de Nascimento:</b> <?php echo $insc->data_nascimento; ?></p>
     

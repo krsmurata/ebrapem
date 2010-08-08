@@ -226,7 +226,8 @@ class Inscricao extends Controller {
             }
             
             $data['inscricao'] = $this->inscricao_model->find_by_cpf($cpf);
-            
+            $data['atividade'] = $this->atividade_model->find($data['inscricao'][0]->atividade_id);
+
             $this->load->view('cabecalho', $data);
             $this->load->view('inscricao_status', $data);
             $this->load->view('rodape', $data);
